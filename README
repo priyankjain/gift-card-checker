@@ -1,0 +1,9 @@
+
+1. I upload a list of A&F codes into a textbox online
+2. It will check the gift card on
+https://www.abercrombie.com/webapp/wcs/stores/servlet/GCLookup?storeId=11203&WcUseHttps=true&ddkey=http%3AGCLookup&krypto=kJjEF2XjnLuFtcpb%2FbyV9A%3D%3D&langId=-1&catalogId=10901
+3. It will then display the codes I entered in a table on the left side, on the right side it will display the balance or if the gift card is invalid
+
+
+A&F $0 card (valid number) 6042696512287280
+A&F invalid card 6042696512239560

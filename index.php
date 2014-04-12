@@ -47,26 +47,27 @@ if(isset($_POST) && count($_POST)>0 && isset($_POST['codes']))
 {
 	$codes=explode("\n",$_POST['codes']);
 	$dir = dirname(__FILE__);
-	$config['cookie_file'] = $dir . '/cookies/' . md5($_SERVER['REMOTE_ADDR']) . '.txt';
-	if (!file_exists($config['cookie_file'])) {
-    	$fp = @fopen($config['cookie_file'], 'w');
-    	@fclose($fp);
-	}
-	$html= '<table class="table table-bordered"><tr><th>Code</th><th>Status</th><th>Response</th></tr>';
-	
+	$html= '<table class="table table-bordered"><tr><th>Code</th><th>Status</th></tr>';
+	$config['cookie_file'] = $dir . '/cookies/' . 'cookie.txt';
+		if (!file_exists($config['cookie_file'])) {
+    		$fp = @fopen($config['cookie_file'], 'w');
+    		@fclose($fp);
+		}
+		delete_cookies();
 	foreach($codes as $code)
 	{
 		$html.= '<tr>';
-		delete_cookies();
+		$response=null;
+		$lookupid='';
+		$code=preg_replace("/[^0-9]$/", "",$code);
 		$response=curl("https://www.abercrombie.com/webapp/wcs/stores/servlet/GCLookupSubmit","storeId=11203&catalogId=10901&langId=-1&URL=GCLookupResponse&country=US&biCardNumber=".$code);
-		echo $response;
 		$lookupid=fetch_value($response,"GCLOOKUP_",'"');
 		$response=null;
 		$response=curl("https://www.abercrombie.com/webapp/wcs/stores/servlet/GCLookupStatus","storeId=11203&catalogId=10901&langId=-1&gcLookUpId=GCLOOKUP_".$lookupid);
 		$reasoncode=fetch_value($response,'"reasonCode" : "','"');
 		$balance=fetch_value($response,'"balance":"','"');
 		$status=($reasoncode!=0)?"Invalid Code":(($balance=="")?'$0.00':$balance);
-		$html.='<td>'.$code.'</td><td>'.$status.'</td><td>'.$response.'</td>';		
+		$html.='<td>'.$code.'</td><td>'.$status.'</td>';		
 		$html.='</tr>';
 	}
 	$html.='</table>';

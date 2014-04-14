@@ -65,6 +65,10 @@ if(isset($_POST) && count($_POST)>0 && isset($_POST['codes']))
 		$response=null;
 		$response=curl("https://www.abercrombie.com/webapp/wcs/stores/servlet/GCLookupStatus","storeId=11203&catalogId=10901&langId=-1&gcLookUpId=GCLOOKUP_".$lookupid);
 		$reasoncode=fetch_value($response,'"reasonCode" : "','"');
+		$response=str_replace("\n", "",$response);
+		$response=str_replace("\r", "",$response);
+		$response=str_replace("\t", "",$response);
+		$response=str_replace(" ", "",$response);
 		$balance=fetch_value($response,'"balance":"','"');
 		$status=($reasoncode!=0)?"Invalid Code":(($balance=="")?'$0.00':$balance);
 		$html.='<td>'.$code.'</td><td>'.$status.'</td>';		

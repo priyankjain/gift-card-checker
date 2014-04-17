@@ -47,7 +47,7 @@ if(isset($_POST) && count($_POST)>0 && isset($_POST['codes']))
 {
 	$codes=explode("\n",$_POST['codes']);
 	$dir = dirname(__FILE__);
-	$html= '<table class="table table-bordered"><tr><th>Code</th><th>Status</th></tr>';
+	$html= '<table class="table table-bordered"><tr><th>Code</th><th>Status</th><th>Response</th></tr>';
 	$config['cookie_file'] = $dir . '/cookies/' . 'cookie.txt';
 		if (!file_exists($config['cookie_file'])) {
     		$fp = @fopen($config['cookie_file'], 'w');
@@ -71,7 +71,7 @@ if(isset($_POST) && count($_POST)>0 && isset($_POST['codes']))
 		$response=str_replace(" ", "",$response);
 		$balance=fetch_value($response,'"balance":"','"');
 		$status=($reasoncode!=0)?"Invalid Code":(($balance=="")?'$0.00':$balance);
-		$html.='<td>'.$code.'</td><td>'.$status.'</td>';		
+		$html.='<td>'.$code.'</td><td>'.$status.'</td><td>'.$response.'</td>';		
 		$html.='</tr>';
 	}
 	$html.='</table>';

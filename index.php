@@ -66,7 +66,7 @@
 			$response=null;
 			$reasoncode=-1;
 			$count=0;
-			while($reasoncode==-1 && $count<=2)
+			while($reasoncode==-1)
 			{
 				$response=curl("https://www.abercrombie.com/webapp/wcs/stores/servlet/GCLookupStatus","storeId=11203&catalogId=10901&langId=-1&gcLookUpId=GCLOOKUP_".$lookupid);
 				$reasoncode=fetch_value($response,'"reasonCode" : "','"');
